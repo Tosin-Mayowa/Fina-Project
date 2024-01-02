@@ -1,0 +1,44 @@
+﻿@page
+@model WebApplication2.Pages.ControlPannel.SuperUser.SetDate.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>DateSettings</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="DateSettings.DatePurpose" class="control-label"></label>
+                <input asp-for="DateSettings.DatePurpose" class="form-control" />
+                <span asp-validation-for="DateSettings.DatePurpose" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateSettings.DateActual" class="control-label"></label>
+                <input asp-for="DateSettings.DateActual" class="form-control" />
+                <span asp-validation-for="DateSettings.DateActual" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateSettings.PurposeDetails" class="control-label"></label>
+                <input asp-for="DateSettings.PurposeDetails" class="form-control" />
+                <span asp-validation-for="DateSettings.PurposeDetails" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

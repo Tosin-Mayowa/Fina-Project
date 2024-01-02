@@ -1,0 +1,40 @@
+﻿@page
+@model LogoutModel
+@{
+    ViewData["Title"] = "Log out";
+    Layout = "/Pages/Shared/_Layout.cshtml";
+}
+
+<header>
+
+    <div style="width:80vw;display:flex;flex-direction:column;align-items:center;padding:50px">
+        <h1>@ViewData["Title"]</h1>
+        @{
+            if (User.Identity?.IsAuthenticated ?? false)
+            {
+                <div style="width:30vw;height:30vh;display:flex;flex-direction:column;margin-top:100px;box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;border-radius:8px">
+                    <p style="font-weight:600;text-align:center;margin-top:70px">Are you sure you want to logout</p>
+                    @* <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+            <button type="submit" class="nav-link btn btn-link text-white" style="background:#990b81;margin-left:150px">Click here to Logout</button>
+            </form>
+
+            <form method="post">
+            <button class="nav-link btn btn-link text-white" style="background:#990b81; margin-left:150px"
+            asp-page="/identity/account/logout" asp-route-returnurl='@url.page("/", new { area = "" })'>
+            logout
+            </button>
+            </form>*@
+                    <form method="post">
+                        <button class="nav-link btn btn-link text-white" style="background:#990b81; margin-left:150px">
+                            logout
+                        </button>
+                    </form>
+                </div>
+            }
+            else
+            {
+                <p>You have successfully logged out of the application.</p>
+            }
+        }
+    </div>
+</header>

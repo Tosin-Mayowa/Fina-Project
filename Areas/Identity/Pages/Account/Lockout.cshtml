@@ -1,0 +1,16 @@
+﻿@page
+@model LockoutModel
+@{
+    ViewData["Title"] = "Locked out";
+    Layout = "_Login";
+}
+
+
+
+<header>
+    <h1 class="text-danger">@ViewData["Title"]</h1>
+    <p class="text-danger">This account has been locked out, please try again later.</p>
+    <a asp-area="Identity" asp-page="/Account/Login" class="d-flex justify-content-center align-items-center" style="width:7rem;height:2rem; border-radius:4px ;background:#990b81;color:white;font-weight:500; font-size:14px;text-decoration:none">
+        Login
+    </a>
+</header>

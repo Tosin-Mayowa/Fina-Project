@@ -1,0 +1,262 @@
+﻿@page
+@model WebApplication2.Pages.GenerateReport.Mapping1Model
+@using Microsoft.AspNetCore.Identity
+@using WebApplication2.Model;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+@{
+    Layout = "_Layout";
+
+    var currentuser = UserManager.GetUserAsync(User).Result;
+    var Role = currentuser.Role;
+    var dept = currentuser.Dept;
+    dept = dept.ToUpper();
+    var isBool = @Model.Departments.Contains(dept);
+
+    var message1 = ViewData["ResultMessages"];
+    var message = ViewData["RecordCount"]?.ToString();
+    int counterGenerate = 1;
+    int countSelect = 0;
+    // var resultMessages = ViewData["ResultMessages"] ;
+    // int messageCount = resultMessages?.Count ?? 0;
+
+    
+
+}
+
+@if (SignInManager.IsSignedIn(User))
+{
+
+
+
+    @if (isBool == true || Role == "2" || Role == "4")
+    {
+        <style>
+            .container {
+                height: 100vh;
+                overflow: hidden;
+                position: static;
+            }
+
+            .headerbx
+            {
+                position: sticky;
+                display: flex;
+                justify-content: space-between;
+                width: 40%;
+            }
+
+            .headerbx2
+            {
+                display:block;
+            }
+
+            button {
+                padding: 5px;
+                background-color: transparent;
+                color: #990b81;
+                border: 2px solid #990b81;
+                height: 35px;
+                width: 120px;
+                border-radius: 20px;
+            }
+
+                button:hover
+                {
+                    background-color: #990b81;
+                    color: #fff
+                }
+                button:active
+                {
+                    background-color: #9E7597;
+                    color: #fff;
+                }
+            .container,
+            thead {
+                overflow-y: auto;
+            }
+
+            table {
+                width: 100%;
+            }
+
+            thead {
+                background-color: #9E7597;
+                position: sticky;
+                color: white;
+                top: 0;
+                z-index: 1;
+                overflow-y: auto;
+            }
+
+            .report .heading {
+                position: sticky;
+                top: 149px;
+                background-color: white; /* You can set the background color you want */
+                z-index: 2; /* Higher z-index to ensure it's above the table row */
+            }
+
+
+            .table thead,
+            .table thead tr,
+            .table thead tr th {
+                position: sticky;
+                top: 0;
+            }
+
+
+
+
+            .text-primary {
+                --bs-text-opacity: none;
+            }
+
+        </style>
+
+
+        <div class="container" p-3>
+            <br>
+            <div style="position:sticky;z-index:auto;" class="heading button">
+
+                <h2 class="text-primary">XML Report</h2>
+
+                <div class="headerb">
+                <div class="headerbx">
+                <h6> StartDate: @Model.xmlReportStartDate</h6>
+                <h6> EndDate: @Model.xmlReportEndDate</h6>
+                 </div>
+                <div class="headerbx2">
+                <h6> XML Location @Model.subfolderPath</h6>
+                <h6>No of Report in Group: @Model.filteredReports.Count</h6>
+                    </div>
+            @* <a href="@Model.subfolderPath">@Model.subfolderPath</a> *@ 
+                </div>
+            </div>
+           
+
+            <form method="post">
+                <button id="selectAllBtn">Select All</button>
+                <button id="deselectAllBtn">Deselect All</button>
+                <button style="float:right;" id="Extract Xml">
+                    Export XML
+                </button>
+
+                @if (Model.ReportNum != 0)
+                        {
+
+                            <div class="alert alert-success" role="alert">
+
+                                @foreach (var messagexx in Model.ResultMessages)
+                                {
+
+                                    <p>@counterGenerate @messagexx</p>
+                                    counterGenerate++;
+                                    
+
+                                }
+
+
+                                <p>Total Number of Report Selected: @Model.SelectedCount</p>
+                                <p>Total Number of Report Generated is: @Model.ReportNum</p>
+                                  
+
+                            </div>
+
+                        }
+
+
+
+
+
+
+
+
+
+
+            <table class="table table-bordered table-striped">
+
+                <thead>
+                    <tr class="theadrow">
+
+                        <th>Report_ID</th>
+                        <th>Report_Description</th>
+                        <th>Category</th>
+                        <th>Frequency</th>
+                        <th>Department</th>
+                        <th>GMethod</th>
+                        <th>Action</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                        @for (int i = 0; i < Model.filteredReports.Count; i++)
+                        {
+                            <tr>
+                                <td>@Model.filteredReports[i].Report_ID </td>
+                                <td>@Model.filteredReports[i].Report_Description  </td>
+                                <td>@Model.filteredReports[i].Category</td>
+                                <td>@Model.filteredReports[i].Frequency</td>
+                                <td>@Model.filteredReports[i].Department</td>
+                                <td>@Model.filteredReports[i].GMethod  </td>
+                                
+                                <td>
+                                    <input type="checkbox" asp-for="SelectedReports[i]" class="select-checkbox" />
+
+                                </td>
+                            </tr>
+                        }
+
+
+                </tbody>
+
+            </table>
+            <br/>
+
+                <button style="float:right;" id="Extract Xml">
+                    Export XML
+                </button>
+            </form>
+        </div>
+    }
+    else
+    {
+        <partial name="_NotPermitted" />
+    }
+
+
+}
+
+
+
+
+
+@section scripts{
+    <script>
+        //select all script
+        var parentControlBtn = document.getElementById('selectAllBtn');
+        parentControlBtn.addEventListener('click', () => {
+            var checkboxes = document.querySelectorAll('.select-checkbox');
+            var childrenCheckboxes = [...checkboxes];
+            childrenCheckboxes.forEach(checkbox => checkbox.checked = true)
+        });
+
+    </script>
+
+
+
+    <script>
+        // Deselect all script
+
+        var parentControlBtn = document.getElementById('deselectAllBtn');
+        parentControlBtn.addEventListener('click', () => {
+            var checkboxes = document.querySelectorAll('.select-checkbox');
+            var childrenCheckboxes = [...checkboxes];
+            childrenCheckboxes.forEach(checkbox => checkbox.checked = false);
+        });
+
+
+    </script>
+}

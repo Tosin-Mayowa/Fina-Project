@@ -1,0 +1,66 @@
+﻿@page
+@model WebApplication2.Pages.ControlPannel.UsersList.IndexModel
+@using Microsoft.AspNetCore.Identity
+@using WebApplication2.Model;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+    @{
+        Layout = "_Layout";
+        var currentuser = UserManager.GetUserAsync(User).Result;
+        var Role = currentuser.Role;
+    }
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <partial name="_Control" />
+    <partial name="_UserLayout" />
+
+
+
+    @if (@Role == "Administration" || @Role == "3" || @Role == "4")
+    {
+        <table class="table table-bordered table-striped mt-4" style="width:100%">
+            <thead>
+                <tr>
+                   
+                    <th>FullName</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>DepartMent</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var data in Model.UsersList)
+                {
+                    <tr>
+                        
+                        <td>@data.FullName</td>
+                        <td>@data.Email</td>
+                        <td>@data.Role</td>
+                        <td>@data.Dept</td>
+                        <td style="display:flex; justify-content:space-between">
+                            <form method="post">
+                                <button asp-page-handler="Lockout" asp-route-email="@data.Email" style="border:none;background:none"><i class="bi bi-lock-fill text-warning" ></i></button>
+                            </form>
+                            <form method="post">
+                                <button asp-page-handler="Unlock" asp-route-email="@data.Email" style="border:none;background:none"><i class="bi bi-unlock-fill text-success"></i></button>
+                            </form>
+                            <form method="post">
+                                <button asp-page-handler="Delete" asp-route-email="@data.Email" style="border:none;background:none"><i class="bi bi-trash3 text-danger"></i></button>
+                            </form>
+                            
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+
+    }
+    else
+    {
+        <partial name="_NotPermitted" />
+    }
+}

@@ -1,0 +1,68 @@
+﻿@page
+@model WebApplication2.Pages.ControlPannel.SuperUser.Uploads.FileUpload.IndexModel
+@using Microsoft.AspNetCore.Identity
+@using WebApplication2.Model;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    Layout = "_Layout";
+    var currentuser =await UserManager.GetUserAsync(User);
+   
+    var Role = currentuser.Role;
+    var message = ViewData["RecordCount"]?.ToString();
+}
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <partial name="_Control" />
+    <partial name="_Superuser" />
+    @if (@Role == "2" || Role == "4")
+    {
+        if (Model.Is_Done)
+        {
+            <form method="post" enctype="multipart/form-data">
+
+
+                @if (!string.IsNullOrWhiteSpace(message))
+                {
+                    <div class="alert alert-success" role="alert">
+                        Total upload is @message
+                    </div>
+
+                }
+                <div class="listTwo ms-1" style="width:100px;cursor:pointer">
+
+                    <span>
+                        <a class="back" asp-area="" asp-page="/ControlPannel/SuperUser/Uploads/Index">
+                            <i class="bi bi-arrow-left-short"></i>
+                            Back
+                        </a>
+                    </span>
+                </div>
+                <h2 class="ms-5 mt-4" style="color:#56564c">Excel Loan Uploads</h2>
+                <div class="d-flex flex-column ms-5" style="margin-top:10vh;padding:10px;border:1px solid #4a4a4a;width:40%;height:20vhvh">
+
+                    <div class="box mb-3">
+                        <input type="file" name="formFile" multiple="multiple" class="upload-button" />
+                    </div>
+                    <input type="submit" value="Upload" style="width:4rem;height:3rem;font-size:1rem; margin-top:10px;background:#800080;border:none;color:white;border-radius:5px">
+                </div>
+            </form>
+        }
+        else
+        {
+            <h1>Loading...</h1>
+        }
+    }
+    else
+    {
+        <partial name="_NotPermitted" />
+    }
+    
+
+}
+else
+{
+    
+}
+

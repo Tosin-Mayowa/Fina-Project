@@ -1,0 +1,127 @@
+﻿@page
+@model WebApplication2.Pages.GenerateReport.MBR300Model
+@{
+    Layout = "_Layout";
+}
+<style>
+    .container {
+        padding: 10px;
+        box-sizing: border-box;
+        height: 100vh;
+        overflow: auto;/* 
+        position: fixed; */
+    }
+
+    .container > .boxins {
+        display:contents;
+        position:relative;
+        overflow-y: auto;
+        scroll-behavior: smooth;
+    }
+
+    table {
+        align-content: center;
+        padding: 60px;
+        width: 100%;
+        color: #000;
+    }
+    .boxins,thead{
+        background-color: #d498ca;
+        height:10px;
+        position: initial;
+        display:sticky;
+        border-top-radius: 20px;
+        color:#fff;
+    }
+     tbody > tr{
+        border-bottom: 0.5px solid #ccc;
+    } 
+    
+    form > tr{
+        padding-right:20px;
+    }
+
+/*     form > tr:nth-child(even) {
+            background: #CCC
+        }
+
+    form > tr:nth-child(odd) {
+        background: #FFF
+    } */
+
+    tr > th{
+        width: 300px;
+    }
+
+    form tr td {
+    }
+    .btn
+    {
+        width:80px;
+        color: #990b81;
+        background: transparent;
+        border-radius:50px;
+        border: 2px solid #990b81;
+        text-align:center;
+    }
+
+    .btn:hover
+    {
+       background-color: #990b81;
+       color:#fff;
+    }
+    form > input
+    {
+        padding-right:10px;
+    }
+    .numbers
+    {
+        text-align: right;
+    }
+</style>
+<div class="container">
+    <br>
+    <div class="boxins">
+    <table>
+        <thead>
+            <tr>
+
+        <th style="font-weight:700; font-size:20px;">Description</th>
+        <th style="font-weight:700; font-size:20px;">Value</th>
+    </tr>
+        </thead>
+
+        @foreach (var settings in Model.MBR300)
+    {
+        <tr>
+
+            <td><strong>@settings.Description</strong></td>
+
+            <td>
+                <form method="post">
+                        <input class="numbers" style="width:45%;line-height:30px;border:1px solid #606060;border-radius:10px;" type="text" id="numberInput" oninput="formatNumber()" name="editedValue" value="@settings.Amount">
+                    <input type="hidden" name="Id" value="@settings.Id"> 
+                    <input class="btn" type="submit" value="Save">
+                </form>
+            </td>
+        </tr>
+    }
+</table>
+    </div>
+</div>
+
+<script>
+    function formatNumber() {
+        // Get the input element
+        var numberInput = document.getElementById("numberInput");
+
+        // Remove non-numeric characters
+        var numericValue = parseFloat(numberInput.value.replace(/[^0-9.]/g, ''));
+
+        // Check if the input is a valid number
+        if (!isNaN(numericValue)) {
+            // Format the number with commas and set it back to the input
+            numberInput.value = numericValue.toLocaleString();
+        }
+    }
+</script>

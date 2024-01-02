@@ -1,0 +1,100 @@
+﻿@page
+@model WebApplication2.Pages.ControlPannel.SuperUser.ReportSettings.IndexModel
+@{
+    Layout = "_Layout";
+}
+
+@{
+    ViewData["Title"] = "Index";
+}
+@* <div "class="header"> *@
+<h1>Report Management</h1>
+
+<p>
+    <a asp-page="AddReport">Add New Report</a>
+</p>
+@* </div> *@
+<style>
+    .container
+    {
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+        overflow-y: auto;
+        height: 100vh;
+        overflow: scroll;
+    }
+    table{
+        border:dashed;
+    }
+
+    tr:nth-child(even) {
+        background: #CCC
+    }
+
+    tr:nth-child(odd) {
+        background: #FFF
+    }
+   /*  tr th{
+        background-color: purple;
+        color:white;
+    } */
+    
+</style>
+<div class="container">
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ReportEntity[0].Report_ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReportEntity[0].Report_Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReportEntity[0].Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReportEntity[0].Frequency)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReportEntity[0].Department)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReportEntity[0].Datalink1)
+            </th>
+
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ReportEntity)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Report_ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Report_Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Frequency)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Department)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Datalink1)
+                </td>
+                <td>
+                    <a asp-page="./EditReport" asp-route-id="@item.Report_ID">Edit</a>
+                                        
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>

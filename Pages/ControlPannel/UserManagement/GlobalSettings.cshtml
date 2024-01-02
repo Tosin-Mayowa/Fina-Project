@@ -1,0 +1,61 @@
+﻿
+@page
+@model WebApplication2.Pages.ControlPannel.UserManagement.GlobalSettingsModel
+@{
+    Layout = "_Layout";
+}
+<style>
+    body
+    {
+        align-content:center;
+        justify-content:center;
+        align-items:center;
+        padding: 60px;
+    }
+    table
+    {
+        align-content:center;
+        padding: 60px;
+        width:80%;
+        height:60%;
+
+    }
+    input
+    {
+        width:auto;
+    }
+    tr
+    {
+        width:auto;
+    }
+</style>
+<body>
+    <br>
+    <br>
+    <br>
+    <br>
+<table>
+    <tr>
+        
+        <th style="font-weight:700; font-size:20px;">Description</th>
+        <th style="font-weight:700; font-size:20px;">Value</th>
+    </tr>
+    @foreach (var settings in Model.GlobalSettings)
+    {
+        <tr>
+            
+                <td><strong>@settings.Description</strong></td>
+
+                <td>
+                <form method="post">
+                        <input style="width:70%;line-height:30px;" type="text" name="editedValue" value="@settings.Value">
+                        
+                                <input type="hidden" name="id" value="@settings.Id" /> &nbsp;&nbsp;
+                        <input style="width:100px; padding: 0 20px;color:white;background-color:#990b81;border-radius:50px;border: none;box-shadow" type="submit" value="Save" />
+                </form>
+            </td>
+        </tr>
+    }
+</table>
+</body>
+

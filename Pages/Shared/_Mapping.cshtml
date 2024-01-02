@@ -1,0 +1,144 @@
+﻿
+
+
+
+<style>
+    .container {
+        height: 100vh;
+        overflow: hidden;
+        position: static;
+    }
+
+
+
+    button {
+        padding: 5px;
+        background-color: #9E7597;
+        color: white;
+        border: none;
+        height: 35px;
+        width: 120px;
+        border-radius: 20px;
+    }
+
+    .container,
+    thead {
+        overflow-y: auto;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    thead {
+        background-color: #9E7597;
+        position: sticky;
+        color:white;
+        top: 0; /* You can set the background color you want */
+        z-index: 1;
+        overflow-y: auto;
+    }
+
+    .report .heading {
+        position: sticky;
+        top: 149px;
+        background-color: white; /* You can set the background color you want */
+        z-index: 2; /* Higher z-index to ensure it's above the table row */
+    }
+
+
+    .table thead,
+    .table thead tr,
+    .table thead tr th {
+        position: sticky;
+        top: 0;
+    }
+
+
+    
+
+    .text-primary {
+        --bs-text-opacity: none;
+    }
+
+</style>
+
+<div class="container" p-3>
+    <br>
+    <div style="position:static;z-index:auto;" class="heading button">
+
+        <h2 class="text-primary">XML Report</h2>
+
+        <button id="selectAllBtn">Select All</button>
+        <button id="deselectAllBtn">Deselect All</button>  <button style="float:right;" id="Extract Xml">Export XML</button>
+
+    </div>
+
+    <br style="background-size:2px;">
+
+
+    <table class="table table-bordered table-striped">
+
+        <thead>
+            <tr class="theadrow">
+
+                <th>Report_ID</th>
+                <th>Report_Description</th>
+                <th>Category</th>
+                <th>Frequency</th>
+                <th>Department</th>
+                <th>GMethod</th>
+                <th>Check</th>
+                <th>Action</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obj in Model.APP_Reportsx)
+            {
+                <tr>
+                    <td width="10%">@obj.Report_ID</td>
+                    <td width="42%">@obj.Report_Description</td>
+                    <td width="12%">@obj.Category</td>
+                    <td width="10%">@obj.Frequency</td>
+                    <td width="6%">@obj.Department</td>
+                    <td width="10%">@obj.GMethod</td>
+                    <td><input type="checkbox" class="select-checkbox" /></td>
+                   
+
+                </tr>
+
+            }
+
+
+        </tbody>
+
+    </table>
+
+
+</div>
+@* <style>
+    div {
+        position: sticky;
+        top: 0;
+        background-color: white; /* You can set the background color you want */
+        z-index: 2; /* Higher z-index to ensure it's above the table row */
+    }
+
+    table {
+        /* Your table styles go here */
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    thead {
+        position: sticky;
+        top: 0;
+        background-color: white; /* You can set the background color you want */
+        z-index: 1; /* Lower z-index to ensure it's below the sticky div */
+    }
+
+    tr {
+        /* Your table row styles go here */
+    }
+</style> *@

@@ -1,0 +1,73 @@
+﻿@page
+@model WebApplication2.Pages.ControlPannel.SuperUser.IndexModel
+@using Microsoft.AspNetCore.Identity
+@using WebApplication2.Model;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    Layout = "_Layout";
+    var currentuser = UserManager.GetUserAsync(User).Result;
+    var Role = currentuser.Role;
+}
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <partial name="_Control" />
+    <partial name="_Superuser" />
+    @if (@Role == "2" || Role == "4")
+    {
+        <h2 class="ms-5 mt-4" style="color:#56564c">Date Settings</h2>
+        <div class="d-flex flex-column align-items-center mt-4" style="width:100vw;height:60vh">
+            <div  style="width:80%">
+                <table class="table table-borderless">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var data in Model.DateSettings)
+                    {
+                    <tr>
+                                <td>
+                                    @data.DatePurpose
+                                </td>
+                                <td>
+                                    @data.DateActual
+                                    <a asp-page="/ControlPannel/SuperUser/EditDate/Index" asp-route-id="@data.Id">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    @data.PurposeDetails
+                                </td>
+                    </tr>
+                        }
+                    </tbody>
+                </table>
+                </div>
+          
+
+            
+        </div>
+
+     
+
+    }
+    else
+    {
+        <partial name="_NotPermitted" />
+    }
+}
+else
+{
+    
+}
+
+@section scripts
+    {
+
+
+}

@@ -1,0 +1,15 @@
+﻿@page
+@using Microsoft.AspNetCore.Identity
+@using WebApplication2.Model;
+@model WebApplication2.Pages.ControlPannel.UserManagement.IndexModel
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    var currentuser = UserManager.GetUserAsync(User).Result;
+}
+@if (SignInManager.IsSignedIn(User)){
+    
+    <div>Hello @User.Identity?.Name!</div>
+    <div>@currentuser.FullName</div>
+
+}

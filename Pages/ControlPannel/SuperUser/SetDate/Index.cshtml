@@ -1,0 +1,71 @@
+﻿@page
+@model WebApplication2.Pages.ControlPannel.SuperUser.SetDate.IndexModel
+
+@using Microsoft.AspNetCore.Identity
+@using WebApplication2.Model;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    Layout = "_Layout";
+    var currentuser = await UserManager.GetUserAsync(User);
+    var Role = currentuser.Role;
+}
+
+@if (SignInManager.IsSignedIn(User))
+{
+
+    <partial name="_Control" />
+    <partial name="_Superuser" />
+    @if (@Role == "2" || Role == "4")
+    {
+        <h2 class="ms-5 mt-4" style="color:#56564c">Date Settings</h2>
+
+        <p>
+            @* <a asp-page="Create">Create New</a> *@
+        </p>
+        <table class="table table-borderless ms-5">
+            <thead>
+                <tr>
+                    <th>
+                        @* @Html.DisplayNameFor(model => model.DateSettings[0].DatePurpose) *@
+                    </th>
+                    <th>
+                        @* @Html.DisplayNameFor(model => model.DateSettings[0].DateActual) *@
+                    </th>
+                    <th>
+                        @* @Html.DisplayNameFor(model => model.DateSettings[0].PurposeDetails) *@
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.DateSettings)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DatePurpose)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateActual)
+                            <a asp-page="./Edit" asp-route-id="@item.Id"><i class="bi bi-pencil"></i></a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PurposeDetails)
+                        </td>
+                        <td>
+                           @*  <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> | *@
+                            @* <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a> *@
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    }
+    else
+    {
+        <partial name="_NotPermitted" />
+    }
+    
+}

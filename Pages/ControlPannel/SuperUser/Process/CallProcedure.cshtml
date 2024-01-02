@@ -1,0 +1,35 @@
+﻿@page
+@model WebApplication2.Pages.ControlPannel.SuperUser.Process.CallProcedureModel
+@using Microsoft.AspNetCore.Identity
+@using WebApplication2.Model;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    Layout = "_Layout";
+    var currentuser = UserManager.GetUserAsync(User).Result;
+    var Role = currentuser.Role;
+}
+
+@if (SignInManager.IsSignedIn(User))
+{
+
+    <partial name="_Control" />
+    <partial name="_Superuser" />
+    @if (@Role == "2" || Role == "4")
+    {
+
+
+    <h1>Processes</h1>
+    <a href="/CallProcedure?procedureName=ggg">ggg</a>
+    <br />
+    <a href="/CallProcedure?procedureName=jjj">Niyi</a>
+
+
+    }
+    else
+    {
+        <partial name="_NotPermitted" />
+    }
+}
+
+

@@ -1,0 +1,48 @@
+﻿@page
+@model WebApplication2.Pages.ControlPannel.SuperUser.Uploads.CashFlow.IndexModel
+@using Microsoft.AspNetCore.Identity
+@using WebApplication2.Model;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    Layout = "_Layout";
+    var currentuser = await UserManager.GetUserAsync(User);
+    var Role = currentuser.Role;
+}
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <partial name="_Control" />
+    <partial name="_Superuser" />
+    @if (@Role == "2" || Role == "4")
+    {
+        <div class="listTwo ms-4" style="width:100px;cursor:pointer">
+
+            <span>
+                <a class="back" asp-area="" asp-page="/ControlPannel/SuperUser/Uploads/Index">
+                    <i class="bi bi-arrow-left-short"></i>
+                    Back
+                </a>
+            </span>
+        </div>
+        <h2 class="ms-5 mt-4" style="color:#56564c">CashFlow Uploads</h2>
+        <div class="d-flex flex-column ms-5" style="margin-top:10vh;box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;padding:10px;width:40%">
+
+            <div class="box">
+                <input type="file" class="upload-button" />
+            </div>
+            <input type="submit" value="Upload" style="width:4rem;height:3rem;font-size:1rem; margin-top:5vh;background:#990b81;border:none;color:white;border-radius:5px">
+        </div>
+    }
+    else
+    {
+        <partial name="_NotPermitted" />
+    }
+    
+
+}
+else
+{
+    
+}
+

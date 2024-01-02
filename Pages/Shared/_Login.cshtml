@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Fina</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Fina.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+<body style="display:flex;flex-direction:column;justify-content:space-between;height:100vh">
+    <header style="height:20vh">
+        <div class="container-fluid" style="background:#990b81;display:flex; justify-content:space-between;padding-right:5px ">
+
+            <img src="~/images/logo.png" alt="logo" style="width:100px;height:100px;object-fit:cover" />
+            <h1 style="font-size:2rem;font-weight:600;color:white;align-self:center">T-FINA</h1>
+        </div>
+    </header>
+    <div class="container" style="flex-grow:1">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer text-muted" style="height:20vh;">
+        <div class="container" style="display:flex;align-items:flex-end;height:100%">
+            &copy; 2023 - Fina - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

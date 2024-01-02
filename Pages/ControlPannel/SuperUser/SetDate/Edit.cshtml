@@ -1,0 +1,83 @@
+﻿@page
+@model WebApplication2.Pages.ControlPannel.SuperUser.SetDate.EditModel
+
+@using Microsoft.AspNetCore.Identity
+@using WebApplication2.Model;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    Layout = "_Layout";
+    var currentuser = UserManager.GetUserAsync(User).Result;
+    var Role = currentuser.Role;
+}
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <partial name="_Control" />
+    <partial name="_Superuser" />
+    @if (@Role == "2" || Role == "4")
+    {
+       
+        <div id="parent" class="listTwo ms-4" style="width:100px;cursor:pointer">
+
+            <span>
+                <a class="back"  asp-page="./Index">
+                    <i class="bi bi-arrow-left-short"></i>
+                    Back
+                </a>
+            </span>
+        </div>
+        
+        <h2 class="mt-4" style="color:#56564c; margin-left:98px">Uploads</h2>
+
+        <div class="row">
+            <div class="col-md-4" style="padding-left:100px;">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="DateSettings.Id" />
+                    <div class="form-group">
+                        <label asp-for="DateSettings.DatePurpose" class="control-label" style="opacity:0"></label>
+                        <input type="hidden" asp-for="DateSettings.DatePurpose" class="form-control" />
+                        <span asp-validation-for="DateSettings.DatePurpose" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DateSettings.DateActual" class="control-label"></label>
+                        <input  asp-for="DateSettings.DateActual" class="form-control" />
+                        <span asp-validation-for="DateSettings.DateActual" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DateSettings.PurposeDetails" class="control-label" style="opacity:0"></label>
+                        <input type="hidden" asp-for="DateSettings.PurposeDetails" class="form-control"  />
+                        <span asp-validation-for="DateSettings.PurposeDetails" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn" style="background:#990b81;color:white" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        
+    }
+    else
+    {
+        <div style="width:100vw;height:100vh;display:flex;flex-direction:column;margin:7vh 0 0 30vw">
+            <img src="~/images/empty-notepad.png" alt="" style="width:300px;height:300px;object-fit:cover">
+            <p style="color:#5c5b5b;margin:2vh 0 0 4vw">You are not permitted To view page</p>
+        </div>
+    }
+
+}
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+           <script>
+    $(document).ready(function(){
+              $("#parent").mouseenter(function(){
+            $("div#back").removeClass("bck")
+            $("div#back").addClass("show");
+      });
+    });
+    </script>
+}

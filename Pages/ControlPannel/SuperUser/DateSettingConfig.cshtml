@@ -1,0 +1,86 @@
+﻿@page
+@model WebApplication2.Pages.ControlPannel.SuperUser.DateSettingConfigModel
+@using Microsoft.AspNetCore.Identity
+@using WebApplication2.Model;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    Layout = "_Layout";
+    var currentuser = await UserManager.GetUserAsync(User);
+
+    var Role = currentuser.Role;
+}
+@if (SignInManager.IsSignedIn(User))
+{
+    <partial name="_Control" />
+    <partial name="_Superuser" />
+    @if (@Role == "2" || Role == "4")
+    {
+        <div style="width:100%;height:100vh;display:flex;flex-direction:column;align-items:center;margin-top:5vh">
+            <div style="width:70%;margin-top:0.4vh">
+                <div style="width:80%; black;display:flex;justify-content:space-between;align-items:flex-end;margin-top:1vh">
+                    <p style="font-weight:700">Date Purpose</p>
+                    <p style="font-weight:700">Date Actual</p>
+                    <p style="font-weight:700">Purpose Details</p>
+                    <p style="font-weight:700">Action</p>
+
+                </div>
+            </div>
+            @for (int i = 0; i < Model.DateConfigList.Count; i++)
+            {
+                var upDate = @Model.DateConfigList[i].DateActual;
+                var realUploadDate = new DateTime(upDate.Year, upDate.Month, upDate.Day);
+                
+                <form method="post" style="width:100%;display:flex;flex-direction:column;align-items:center;">
+                    <div style="width:70%; display:flex;margin-top:0.3vh">
+                        <input name="datePurpose" value="@Model.DateConfigList[i].DatePurpose" readonly>
+                        <input name="dateActual" id="@("actualD" + i)" value="@realUploadDate.ToString("yyyy-MM-dd")" class="ms-1" style="width:180px">
+                        <input name="purposeDetails" value="@Model.DateConfigList[i].PurposeDetails" readonly>
+                        <input type="hidden" name="id" value="@Model.DateConfigList[i].Id" />
+                        <input style="width:100px; padding: 0 20px;color:white;background-color:#990b81;border-radius:50px;border: none;box-shadow" type="submit" value="Save" class="ms-4" />
+                    </div>
+                </form>
+
+
+
+            }
+        </div>
+    }
+    else
+    {
+
+    }
+
+}
+
+
+@section scripts{
+   @*  <script>
+      
+
+        var num = parseInt("@Model.Num", 10); 
+
+        for (var i = 0; i < num; i++) {
+            document.getElementById(`loanD${i}`).addEventListener('click', function () {
+                
+                this.type = "date";
+            });
+        }
+
+    </script> *@
+
+
+
+    <script>
+       
+
+        var num = parseInt("@Model.Num", 10);
+
+        for (var i = 0; i < num; i++) {
+
+            document.getElementById(`actualD${i}`).addEventListener('click', function () {
+                this.type = "date";
+            });
+        }
+    </script>
+}

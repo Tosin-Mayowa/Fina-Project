@@ -1,0 +1,19 @@
+﻿@page
+@model WebApplication2.Pages.ActiveDirectoryLoginModel
+@{
+    ViewData["Title"] = "Log in";
+    Layout = "_Login";
+}
+
+<section style="width:100vw;height:100vh;display:flex;flex-direction:column;margin-top:15vh;align-items:center;">
+    <div class="typewriter">
+        <p>Fina Report Generating App.</p>
+    </div>
+    <form method="post" style="border:1px solid #990b81;width:40%;height:40%;position: static;padding:2rem;margin-top:2vh ">
+        <input type="text" name="email" placeholder="please enter your email" class="form-control" autocomplete="username" aria-required="true" style="border-radius:50px;height:6vh">
+        <input type="password" name="password" placeholder="please enter your password" class="form-control" autocomplete="current-password" aria-required="true" style="height:6vh;border-radius:50px;margin-top:5vh">
+        <div>
+            <button id="login-submit" type="submit" class="w-100 btn btn-lg" style="background:#990b81;color:white;font-weight:500;border-radius:50px;margin-top:5vh">Log in</button>
+        </div>
+    </form>
+</section>

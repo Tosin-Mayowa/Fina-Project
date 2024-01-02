@@ -1,0 +1,379 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using WebApplication2.Model;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject ApplicationDbContext _Context 
+
+@{
+
+
+    var dateSettingsList = _Context.DateSettings.Where(x => x.DatePurpose == "ProcessDate").ToList();
+    var actualDate = dateSettingsList.Select(x => x.DateActual).ToList();
+    var date = actualDate[0].ToString("dd-MM-yyyy");
+    var userId = Context.Request.Query["userId"];
+    var newMe = Context.User.Identity.IsAuthenticated;
+    var currentuser = userId.Count != 0 ? await UserManager.FindByIdAsync(userId) : UserManager.GetUserAsync(User).Result;
+   
+         var firstName = currentuser.FullName.IndexOf(" ") < 0 ? currentuser.FullName : currentuser.FullName.Substring(0, currentuser.FullName.IndexOf(" "));
+    
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - FinaApp</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/FinaApp.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    @* <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" /> *@
+   
+    <style>
+        .input-group-append {
+            cursor: pointer;
+        }
+        a {
+            text-decoration: none;
+        }
+
+        .box {
+            width: 15vw;
+            height: 6.5vh;
+            border: 1px solid black;
+            border-radius: 50px;
+            overflow:hidden;
+           
+            
+        }
+
+        ::-webkit-file-upload-button {
+            color: white;
+            background: #990b81;
+            padding: 10px;
+            border-radius: 50px;
+            box-shadow: 1px 0 1px 1px #990b81;
+            outline: none;
+        }
+
+            ::-webkit-file-upload-button:hover {
+                background: #7A4988;
+            }
+
+        .parentlist {
+            align-self: center;
+            justify-self: flex-start;
+            width: 100%;
+            height: 70%;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .list {
+            list-style-type: none;
+            margin-top: 5vh;
+            width: 80%;
+            height: 5vh;
+            border-radius: 50px;
+            align-self: center;
+            display: flex;
+            align-items: center;
+            transition: background 0.2s ease-in-out;
+        }
+
+        .listTwo {
+            border-radius: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.2s ease-in-out;
+        }
+
+
+        .list a {
+            justify-self: flex-start;
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            margin-left: 1vw;
+        }
+
+        .list:hover {
+            background: #7A4988;
+        }
+
+        .list a:hover {
+            color: white;
+        }
+
+        .list a:active {
+            background: #7A4988;
+        }
+
+        .user-list {
+            list-style-type: none;
+        }
+
+        .back {
+            color: black;
+        }
+
+        .listTwo:hover {
+            background: #7A4988;
+            color: white;
+        }
+
+        .listClicked {
+            background: #7A4988;
+            color: white;
+        }
+
+        .bck{
+            diplay:none;
+            transition: display 0.2s ease-in-out;
+        }
+        .show{
+            display:inline-block;
+            color: white;
+            background: #990b81;
+            width: 3vw;
+            margin-top: 2px;
+            margin-left: 4vw;
+            border-radius: 4px;
+            padding-left: 5px;
+            transition: display 0.2s ease-in-out;
+        }
+        .back:hover {
+            color: white;
+        }
+    </style>
+</head>
+<body style="margin:0;padding:0;box-sizing:border-box">
+    @if (userId.Count != 0)
+    {
+        <div class="d-flex" style="margin:0;padding:0;height:1200px;width:100vw">
+
+            <div class="d-flex flex-column" style="height:100%;width:20%; background:#990b81">
+                <div class="d-flex justify-content-around align-items-center" style="width:80%">
+                    <img src="~/images/logo.png" alt="logo" style="width:100px;height:100px;object-fit:cover" />
+                    <h1 style="font-size:2rem;font-weight:600;color:white">T-FINA</h1>
+                </div>
+                <ul class="parentlist" style="margin:40px">
+
+
+                    <li class="list">
+                        <i class="bi bi-file-bar-graph text-white ms-5"></i>
+                        <a href="#">Generate Report</a>
+                    </li>
+
+                    <li class="list">
+                        <i class="bi bi-safe2 text-white ms-5"></i>
+                        @* <a asp-area="Identity" asp-page="/Account/Register">
+                    Control Pannel
+                    </a> *@
+                        <a href="#">
+                            Control Pannel
+                        </a>
+                    </li>
+                    <li class="list">
+                        <i class="bi bi-gear text-white ms-5"></i>
+                        <a  href="#">
+                            Process
+                        </a>
+                    </li>
+                    <li class="list">
+                        <i class="bi bi-box-arrow-right text-white ms-5"></i>
+                        <a href="#">
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div style="width:80%;height:100%;">
+                <div class="d-flex justify-content-end" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;padding:30px;width:100%;height:10vh">
+                   
+                    <div style="margin-right:5px;align-self:baseline;width:20px;height:20px;background-color:green;border-radius:50%;margin-top:5px">
+                    </div>
+                    <div><p style="font-weight:600;align-self:baseline;margin-right:15px">Hello, @firstName</p></div>
+                    <div class="d-flex align-items-center justify-content-center" style="align-self:center;width:50px;height:50px;background-color:#990b81;border-radius:50%;text-align:center">
+                        <h1 style="font-size:1rem;font-weight:700;color:white;text-transform:uppercase">@firstName.Substring(0,2)</h1>
+
+                    </div>
+
+                </div>
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
+
+
+        </div>
+    }
+
+
+  
+
+
+   
+
+
+     @if (SignInManager.IsSignedIn(User))
+
+    {
+        <div class="d-flex" style="margin:0;padding:0;height:1200px;width:100vw">
+
+            <div class="d-flex flex-column" style="height:100%;width:20%; background:#990b81">
+                <div class="d-flex justify-content-around align-items-center" style="width:80%">
+                    <img src="~/images/logo.png" alt="logo" style="width:100px;height:100px;object-fit:cover" />
+                    <h1 style="font-size:2rem;font-weight:600;color:white">T-FINA</h1>
+                </div>
+                <ul class="parentlist" style="margin:40px">
+
+
+                    <li class="list">
+                        <i class="bi bi-file-bar-graph text-white ms-5"></i>
+                        <a asp-area="" asp-page="/GenerateReport/Index">Generate Report</a>
+                    </li>
+
+                    <li class="list">
+                        <i class="bi bi-safe2 text-white ms-5"></i>
+      
+                        <a asp-area="" asp-page="/ControlPannel/Index">
+                            Control Pannel
+                        </a>
+                    </li>
+                    <li class="list">
+                        <i class="bi bi-gear text-white ms-5"></i>
+                        <a asp-area="" asp-page="/Uploads/Index">
+                            Process
+                        </a>
+                    </li>
+                    <li class="list">
+                        <i class="bi bi-box-arrow-right text-white ms-5"></i>
+                        <a asp-area="Identity" asp-page="/Account/Logout">
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div style="width:80%;height:100%;">
+                <div class="d-flex justify-content-end" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;padding:30px;width:100%;height:10vh">
+                    <div><p style="font-weight:600;align-self:baseline;margin-right:25px;height:100%">Process Date: @date</p></div>
+                    <div style="margin-right:5px;align-self:baseline;width:20px;height:20px;background-color:green;border-radius:50%;margin-top:5px">
+                    </div>
+                    <div><p style="font-weight:600;align-self:baseline;margin-right:15px;height:100%">Hello, @firstName</p></div>
+                    <div class="d-flex align-items-center justify-content-center" style="align-self:center;width:50px;height:50px;background-color:#990b81;border-radius:50%;text-align:center">
+                        <h1 style="font-size:1rem;font-weight:700;color:white;text-transform:uppercase">@firstName.Substring(0,2)</h1>
+
+                    </div>
+                    @*remove h1*@
+                    <h1>@newMe</h1>
+                </div>
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
+
+
+        </div>
+    } 
+   
+
+
+
+   
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    
+    @* <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> *@
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WebApplication2</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WebApplication2.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-page="/Index">WebApplication2</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                        </li>
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - WebApplication2 - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html> *@

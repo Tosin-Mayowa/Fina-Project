@@ -1,0 +1,35 @@
+﻿@page
+@model WebApplication2.Pages.ControlPannel.UsersList.UnlockModel
+@using Microsoft.AspNetCore.Identity
+@using WebApplication2.Model;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+@{
+    Layout = "_Layout";
+    var currentuser = UserManager.GetUserAsync(User).Result;
+    var Role = currentuser.Role;
+}
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <partial name="_Control" />
+    <partial name="_UserLayout" />
+
+
+
+    @if (@Role == "Administration" || @Role == "3" || @Role == "4")
+    {
+        <div style="width:30vw;height:30vh;display:flex;flex-direction:column;margin-top:100px;margin-left:25vw;box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;border-radius:8px">
+            <i class="bi bi-unlock-fill text-success" style="align-self:center;font-size:3rem"></i>
+            <p style="font-weight:600;text-align:center;margin-top:10px">User with email @Model.Email is enabled, you can now loggin</p>
+
+        </div>
+    }
+    else
+    {
+
+    }
+
+}

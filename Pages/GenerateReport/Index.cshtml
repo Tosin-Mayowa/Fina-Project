@@ -1,0 +1,118 @@
+﻿@page
+@model WebApplication2.Pages.GenerateReport.IndexModel
+@using Microsoft.AspNetCore.Identity
+@using WebApplication2.Model;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+@{
+    Layout = "_Layout";
+
+    string ReportTitle = "";
+    
+
+}
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <div style="overflow-y:auto;">
+
+    
+    <h1>Groups</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                   
+                </tr>
+            </thead>
+            <tbody>
+        @foreach (var group in Model.Category)
+        {
+
+            @if(group == "CRD")
+            {
+                ReportTitle = "Credit Admin Reports";
+            }
+            else if(group == "DBR")
+            {
+                ReportTitle = "Daily Bank Reports";
+            }
+            else if(group == "MBR")
+            {
+                ReportTitle = "Monthly Bank Reports";
+            }
+            else if(group == "QBR")
+            {
+                ReportTitle = "Quaterly Bank Reports";
+            }
+            else if(group == "SBR")
+            {
+                ReportTitle = "Semi Annual Bank Reports";
+            }
+            else if(group == "MTR")
+            {
+                ReportTitle = "Daily Bank Reports";
+            }
+            else if(group == "DTR")
+            {
+                ReportTitle = "Daily Trade Reports";
+            }
+            else if (group == "TB")
+            {
+                ReportTitle = "Treasury Report";
+            }
+            else
+            {
+               ReportTitle = "Special Reports";
+            }
+
+            
+               
+                    <tr>
+                        <td>@ReportTitle</td>
+                        <td>
+                            <a class="btn Report_Button" asp-page="/GenerateReport/Mapping1" asp-route-Category="@group" asp-route-Category="@group">XML</a>
+                        </td>
+                        <td>
+                            <a class="btn Report_Button" asp-page="/GenerateReport/ExcelDownloads" asp-route-Category="@group" asp-route-Category="@group">Excel Download</a>
+                        </td>
+                        <td>
+                            <a class="btn Report_Button" asp-page="/GenerateReport/DirectUpdate" asp-route-Category="@group" asp-route-Category="@group">Database</a>
+                        </td>
+                     </tr>
+                   
+            
+        }
+    </tbody>
+            </table>
+
+    
+    </div>
+    
+}
+<style>
+    .Report_Button {
+        width: 7rem;
+        height: 2rem;
+        border-radius: 4px;
+        background: #9E7597;
+        color: white;
+        font-weight: 500;
+        font-size: 14px;
+        text-decoration: none;
+        transition: background 0.2s ease-in-out;
+    }
+
+        .Report_Button:hover {
+            background: #990b81;
+            color: white;
+        }
+</style>
+@section scripts{
+   
+
+
+
+}

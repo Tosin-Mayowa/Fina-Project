@@ -1,0 +1,93 @@
+﻿@page
+@model WebApplication2.Pages.ControlPannel.SuperUser.Uploads.ViewDaily.IndexModel
+@using Microsoft.AspNetCore.Identity
+@using WebApplication2.Model;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    Layout = "_Layout";
+    var currentuser = await UserManager.GetUserAsync(User);
+
+    var Role = currentuser.Role;
+}
+@if (SignInManager.IsSignedIn(User))
+{
+    <partial name="_Control" />
+    <partial name="_Superuser" />
+    @if (@Role == "2" || Role == "4")
+    {
+        <div style="width:100%;height:100vh;display:flex;flex-direction:column;align-items:center;margin-top:5vh">
+            <div style="width:70%;margin-top:0.4vh">
+                <div style="width:55%; black;display:flex;justify-content:space-between;align-items:flex-end;margin-top:1vh">
+                    <p style="font-weight:700">Date</p>
+                    <p style="font-weight:700">Rate</p>
+                    <p style="font-weight:700">Action</p>
+
+                </div>
+            </div>
+            @for (int i= 0;i < Model.DailyList.Count;i++)
+    {
+                @* var upDate = @Model.DailyList[i].Date;
+                var realUploadDate = new DateTime(upDate.Year, upDate.Month, upDate.Day); *@
+                var loanDate = @Model.DailyList[i].Date.Date;
+                <form method="post" style="width:100%;display:flex;flex-direction:column;align-items:center;">
+                    <div style="width:70%; display:flex;margin-top:0.3vh">
+                        @*<input name="uploadD" id="@("uploadD" + i)" value="@realUploadDate.ToString("yyyy-MM-dd")" class="ms-1" style="width:180px">*@
+                        <input name="loanD" id="@("loanD" + i)" value="@loanDate.ToString("yyyy-MM-dd")" style="width:180px">
+                        <input name="rate" value="@Model.DailyList[i].Rate" style="width:180px" />
+                        <input type="hidden" name="id" value="@Model.DailyList[i].Id" />
+                        <input style="width:100px; padding: 0 20px;color:white;background-color:#990b81;border-radius:50px;border: none;box-shadow" type="submit" value="Save" class="ms-4" />
+                    </div>
+                </form>
+
+
+
+            }
+        </div>
+    }
+    else
+    {
+
+    }
+
+}
+
+
+@section scripts{
+    <script>
+        //select all script
+        // var loanInp = document.getElementById('loanDate');
+        // loanInp.addEventListener('click', () => {
+        //      loanInp.type="date"
+        // });
+
+        var num = parseInt("@Model.Num", 10); // Convert to integer
+
+        for (var i = 0; i < num; i++) {
+            document.getElementById(`loanD${i}`).addEventListener('click', function () {
+                // Use event.target to refer to the clicked element
+                this.type = "date";
+            });
+        }
+
+    </script>
+
+
+
+    <script>
+        // Deselect all script
+        // var uploadInp = document.getElementById('upDate');
+        // uploadInp.addEventListener('click', () => {
+        //     uploadInp.type = "date";
+        // });
+
+        var num = parseInt("@Model.Num", 10);
+        
+        for (var i = 0; i < num; i++) {
+
+            document.getElementById(`uploadD${i}`).addEventListener('click', function () {
+                this.type = "date";
+            });
+        }
+    </script>
+}

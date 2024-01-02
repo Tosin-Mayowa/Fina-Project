@@ -1,0 +1,146 @@
+﻿@page
+@model WebApplication2.Pages.ControlPannel.SuperUser.ReportSettings.EditReportModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+<hr />
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="APP_Report.NO" />
+            <table class="table">
+                <style>
+                    td{
+                       font-size:20px;
+                       font-weight:700;
+                    }
+                </style>
+                <tr>
+                    <td>
+                        <label asp-for="APP_Report.Report_ID" class="control-label"></label>
+                    </td>
+                    <td>
+                        <input asp-for="APP_Report.Report_ID" class="form-control" style=" width: 450px;" />
+                        <span asp-validation-for="APP_Report.Report_ID" class="text-danger"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="APP_Report.Report_Description" class="control-label"></label>
+                    </td>
+                    <td width="70%">
+                        <input asp-for="APP_Report.Report_Description" class="form-control" />
+                        <span asp-validation-for="APP_Report.Report_Description" class="text-danger"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="APP_Report.Category" class="control-label"></label>
+                    </td>
+                    <td>
+                        <select asp-for="APP_Report.Category" class="form-control">
+                            <option value="">Select Category</option>
+                            <option value="CRD">CRM</option>
+                            <option value="CRMS">CRMS</option>
+                            <option value="DBR">DBR</option>
+                            <option value="DTR">DTR</option>
+                            <option value="MBR">MBR</option>
+                            <option value="MTR">MTR</option>
+                            <option value="QBR">QBR</option>
+                            <option value="SBR">SBR</option>
+                            <option value="TR">TR</option>
+                            <option value="OTH">OTH</option>
+
+                        </select>
+                        <span asp-validation-for="APP_Report.Category" class="text-danger"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="APP_Report.Frequency" class="control-label"></label>
+                    </td>
+                    <td>
+
+                        <select asp-for="APP_Report.Frequency" class="form-control">
+                            <option value="">Select Frequency</option>
+                            <option value="Daily">Daily</option>
+                            <option value="Monthly">Monthly</option>
+                            <option value="Quarterly">Quarterly</option>
+                            <option value="SemiAnnual">SemiAnnual</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <span asp-validation-for="APP_Report.Frequency" class="text-danger"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="APP_Report.Department" class="control-label"></label>
+                    </td>
+                    <td>
+                        <select asp-for="APP_Report.Department" class="form-control">
+                            <option value="">Select Department</option>
+                            <option value="Credit">Credit</option>
+                            <option value="Fincon">Fincon</option>
+                            <option value="Trade">Trade</option>
+                        </select>
+                        <span asp-validation-for="APP_Report.Department" class="text-danger"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="APP_Report.GMethod" class="control-label"></label>
+                    </td>
+                    <td>
+
+                        <select asp-for="APP_Report.GMethod" class="form-control">
+                            <option value="">Select GMethod</option>
+                            <option value="Database">Database</option>
+                            <option value="Excel">Excel</option>
+
+                        </select>
+                        <span asp-validation-for="APP_Report.GMethod" class="text-danger"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="APP_Report.Checkbox" class="control-label"></label>
+                    </td>
+                    <td>
+                        <input asp-for="APP_Report.Checkbox" class="form-control" />
+                        <span asp-validation-for="APP_Report.Checkbox" class="text-danger"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="APP_Report.Datalink1" class="control-label"></label>
+                    </td>
+                    <td>
+                        <input asp-for="APP_Report.Datalink1" class="form-control" />
+                        <span asp-validation-for="APP_Report.Datalink1" class="text-danger"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="APP_Report.Datalink2" class="control-label"></label>
+                    </td>
+                    <td>
+                        <input asp-for="APP_Report.Datalink2" class="form-control" />
+                        <span asp-validation-for="APP_Report.Datalink2" class="text-danger"></span>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" style="width:120px; border-radius:20px;"/>
+            </div>
+        </form>
+    </div>
+
+

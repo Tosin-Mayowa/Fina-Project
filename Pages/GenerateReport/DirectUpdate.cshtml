@@ -1,0 +1,67 @@
+﻿@page
+@model WebApplication2.Pages.GenerateReport.DirectUpdateModel
+
+@using Microsoft.AspNetCore.Identity
+@using WebApplication2.Model;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+@{
+    Layout = "_Layout";
+    var currentuser = UserManager.GetUserAsync(User).Result;
+    var Role = currentuser.Role;
+    var dept = currentuser.Dept;
+    dept = dept.ToUpper();
+    var isBool = @Model.Departments.Contains(dept);
+}
+
+@if (SignInManager.IsSignedIn(User))
+{
+
+
+
+    @if (isBool == true || Role == "2" || Role == "4")
+    {
+        <partial name="_DirectUpdate" />
+    }
+    else
+    {
+        <partial name="_NotPermitted" />
+    }
+
+
+}
+
+
+
+
+
+@section scripts{
+    <script>
+        //select all script
+        var parentControlBtn = document.getElementById('selectAllBtn');
+        parentControlBtn.addEventListener('click', () => {
+            var checkboxes = document.querySelectorAll('.select-checkbox');
+            var childrenCheckboxes = [...checkboxes];
+            childrenCheckboxes.forEach(checkbox => checkbox.checked = true)
+        });
+
+    </script>
+
+
+
+    <script>
+        // Deselect all script
+
+        var parentControlBtn = document.getElementById('deselectAllBtn');
+        parentControlBtn.addEventListener('click', () => {
+            var checkboxes = document.querySelectorAll('.select-checkbox');
+            var childrenCheckboxes = [...checkboxes];
+            childrenCheckboxes.forEach(checkbox => checkbox.checked = false);
+        });
+
+
+    </script>
+}
+
